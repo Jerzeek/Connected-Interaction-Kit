@@ -1,0 +1,149 @@
+<p><img src="assets/Grove-Chainable-LED-2.0.png" alt="Chainable RGB LED" width="250" /></p>
+
+<h1 id="chainable-rgb-led-grove">Chainable RGB LED (Grove)</h1>
+<p><a href="../../glossary/glossary"><img src="../../glossary/assets/output.png" alt="Output" width="72" /></a> <a href="../../glossary/glossary"><img src="../../glossary/assets/digital.png" alt="Digital" width="72" /></a> <a href="../../glossary/glossary"><img src="../../glossary/assets/2wire.png" alt="Two Wire" width="72" /></a></p>
+
+<p>A light source that can produce RGB colored light. Can be daisy chained.</p>
+
+<p>More detailed information is available on the <a href="https://wiki.seeedstudio.com/Grove-Chainable_RGB_LED/">Seeed Studio Wiki</a>.</p>
+
+<p class="important">Before proceeding, make sure your LED module looks like the illustration above. If you are not sure if this is the correct version, refer to this <a href="chainable-led">overview</a>.</p>
+
+<hr />
+
+<h2 id="wiring">Wiring</h2>
+
+<p>Each connector on the BitsyExpander Board provides connections to two pins. As most components only need one pin to work, the second pin is often shared with another connector. <strong>To use this type of Chainable LED component, ensure it is attached to a connector with two available pins</strong>. Ensure you avoid using another connector that shares pins with the one you use for the Chainable LED.</p>
+
+<p class="highlight">Confirm that the Chainable LED module is oriented correctly, with the input port (marked “<strong>IN</strong>”, at the base of the arrow) connected to the Grove connector on your BitsyExpander Board or the previous LED in your chain.</p>
+
+<h2 id="preparation">Preparation</h2>
+
+<p>Grove Chainable RGB LEDs are based on the <code class="language-plaintext highlighter-rouge">P9813</code> LED driver chip. To easily control them in code, the <code class="language-plaintext highlighter-rouge">P9813</code> <a href="../../glossary/glossary">library</a> is needed. If this LED type came bundled with your kit, the library should be pre-loaded on your ItsyBitsy Microcontroller.</p>
+
+<p>Otherwise, follow the following steps:</p>
+
+<ol>
+  <li><a href="assets/p9813.py">Download the P9813 library from here.</a></li>
+  <li>Place the <code class="language-plaintext highlighter-rouge">p9813.py</code> file in the <code class="language-plaintext highlighter-rouge">lib</code> folder on the <code class="language-plaintext highlighter-rouge">CIRCUITPY</code> drive of your ItsyBitsy Microcontroller.</li>
+</ol>
+
+<p class="highlight">You can verify that the library is installed by ensuring a file called <code class="language-plaintext highlighter-rouge">p9813.py</code> is present in the <code class="language-plaintext highlighter-rouge">lib</code> folder of your <code class="language-plaintext highlighter-rouge">CIRCUITPY</code> drive. You can learn more about libraries and their use in the <a href="../../glossary/glossary">Glossary</a> or the <a href="../../Tutorials">Tutorials</a>.</p>
+
+<p>The examples below assume your component is connected to pins <strong>D13</strong> and <strong>D10</strong>, contained in the connector labeled  <strong>D13</strong> on the BitsyExpander Board.</p>
+
+<h2 id="making-a-chainable-rgb-led-blink">Making a Chainable RGB LED blink</h2>
+
+<p>This example uses the <code class="language-plaintext highlighter-rouge">fill()</code> <a href="../../glossary/glossary">function</a> to set the brightness of each color channel <code class="language-plaintext highlighter-rouge">(RED, GREEN, BLUE)</code> to a value between 0 to 255. The value 0 corresponds to off, while 255 means fully on. A bright red LED, for example, is defined by <code class="language-plaintext highlighter-rouge">(255, 0, 0)</code>. <code class="language-plaintext highlighter-rouge">(255, 255, 255)</code> will make the LED appear white, while <code class="language-plaintext highlighter-rouge">(0, 0, 0)</code> will turn it off. Use values between 0 and 255 to vary the brightness level and mix different colors.</p>
+
+<p>During the setup phase, the <code class="language-plaintext highlighter-rouge">reset()</code> function is called to ensure all LEDs are off on startup. The <code class="language-plaintext highlighter-rouge">write()</code> function is called to display the new colors previously defined using <code class="language-plaintext highlighter-rouge">fill()</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">p9813</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">pin_clk</span> <span class="o">=</span> <span class="n">board</span><span class="p">.</span><span class="n">D13</span>
+<span class="n">pin_data</span> <span class="o">=</span> <span class="n">board</span><span class="p">.</span><span class="n">D10</span>
+
+<span class="n">num_leds</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">leds</span> <span class="o">=</span> <span class="n">p9813</span><span class="p">.</span><span class="n">P9813</span><span class="p">(</span><span class="n">pin_clk</span><span class="p">,</span> <span class="n">pin_data</span><span class="p">,</span> <span class="n">num_leds</span><span class="p">)</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span><span class="n">leds</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
+
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"ON"</span><span class="p">)</span>
+    <span class="n">leds</span><span class="p">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+    <span class="n">leds</span><span class="p">.</span><span class="n">write</span><span class="p">()</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">print</span><span class="p">(</span><span class="s">"OFF"</span><span class="p">)</span>
+    <span class="n">leds</span><span class="p">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">leds</span><span class="p">.</span><span class="n">write</span><span class="p">()</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="fading-a-chainable-rgb-led-in-and-out">Fading a Chainable RGB LED in and out</h2>
+
+<p>This example uses a <code class="language-plaintext highlighter-rouge">for</code> <a href="../../glossary/glossary">loop</a> to increase and decrease the brightness of an LED on each run through the loop. The <code class="language-plaintext highlighter-rouge">sleep()</code> function is used to slow down the speed at which the loop iterates.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">p9813</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">pin_clk</span> <span class="o">=</span> <span class="n">board</span><span class="p">.</span><span class="n">D13</span>
+<span class="n">pin_data</span> <span class="o">=</span> <span class="n">board</span><span class="p">.</span><span class="n">D10</span>
+
+<span class="n">num_leds</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">leds</span> <span class="o">=</span> <span class="n">p9813</span><span class="p">.</span><span class="n">P9813</span><span class="p">(</span><span class="n">pin_clk</span><span class="p">,</span> <span class="n">pin_data</span><span class="p">,</span> <span class="n">num_leds</span><span class="p">)</span>
+
+<span class="n">delta</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span><span class="n">leds</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
+
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Fading in..."</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">intensity</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
+        <span class="n">leds</span><span class="p">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">intensity</span><span class="p">))</span>
+        <span class="n">leds</span><span class="p">.</span><span class="n">write</span><span class="p">()</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">"Fading out..."</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">intensity</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">delta</span><span class="p">):</span>
+        <span class="n">leds</span><span class="p">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">intensity</span><span class="p">))</span>
+        <span class="n">leds</span><span class="p">.</span><span class="n">write</span><span class="p">()</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.04</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="note">Using the <code class="language-plaintext highlighter-rouge">sleep()</code> function to set the fading speed will prevent other code from executing while sleeping. This is called a blocking delay and does not work well when multitasking. You can read Adafruit’s tutorial on <a href="https://learn.adafruit.com/multi-tasking-with-circuitpython/no-sleeping">Multitasking with CircuitPython</a> to learn about a non-blocking alternative.</p>
+
+<h2 id="using-a-chain-with-multiple-leds">Using a chain with multiple LEDs</h2>
+
+<p>This example demonstrates how to address individual LEDs in a chain. As before, the <code class="language-plaintext highlighter-rouge">reset()</code> function turns all LEDs off, while <code class="language-plaintext highlighter-rouge">fill()</code> can set the entire chain to the same color. To specify a color for each LED individually, refer to the code below. Note that LEDs are indexed starting from 0, which refers to the first LED in the chain.</p>
+
+<p>Remember to use the <code class="language-plaintext highlighter-rouge">write()</code> function to write the newly defined color values to the LED chain.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">p9813</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">pin_clk</span> <span class="o">=</span> <span class="n">board</span><span class="p">.</span><span class="n">D13</span>
+<span class="n">pin_data</span> <span class="o">=</span> <span class="n">board</span><span class="p">.</span><span class="n">D10</span>
+
+<span class="n">num_leds</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">leds</span> <span class="o">=</span> <span class="n">p9813</span><span class="p">.</span><span class="n">P9813</span><span class="p">(</span><span class="n">pin_clk</span><span class="p">,</span> <span class="n">pin_data</span><span class="p">,</span> <span class="n">num_leds</span><span class="p">)</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span><span class="n">leds</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span> <span class="c1"># turn off all LEDs
+</span>
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    
+    <span class="c1"># set color values for the LEDs individually
+</span>    <span class="n">leds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># red
+</span>    <span class="n">leds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># green
+</span>    <span class="n">leds</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span> <span class="c1"># blue
+</span>    <span class="n">leds</span><span class="p">.</span><span class="n">write</span><span class="p">()</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># set a color value for all LEDs at once
+</span>    <span class="n">leds</span><span class="p">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> 
+    <span class="n">leds</span><span class="p">.</span><span class="n">write</span><span class="p">()</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+

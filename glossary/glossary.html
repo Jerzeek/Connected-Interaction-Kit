@@ -1,0 +1,140 @@
+<h1 id="glossary">Glossary</h1>
+
+<h2 id="signal-terms">Signal Terms</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Term</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img src="assets/input.png" alt="Input" /></td>
+      <td style="text-align: left">An <strong>input</strong> is something a micro-controller can detect, such as the state of a switch, the rotation of a dial, or a microphone’s signal.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="assets/output.png" alt="Output" /></td>
+      <td style="text-align: left">An <strong>output</strong> is something that can be controlled by a microcontroller, such as a light, speaker, or motor.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="assets/digital.png" alt="Digital" /></td>
+      <td style="text-align: left">A <strong>digital</strong> signal is created by anything that assumes discrete states, such as on/off, true/false, or 1/0.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="assets/analog.png" alt="Analog" /></td>
+      <td style="text-align: left">An <strong>analog</strong> signal is created by anything that can assume any state on a continuous spectrum, such as temperature or pressure.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="assets/pwm.png" alt="PWM" /></td>
+      <td style="text-align: left">A <strong>pulse-width modulated</strong> signal is an analog-like signal created by switching a digital signal on and off very fast.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="assets/iic.png" alt="I²C" /></td>
+      <td style="text-align: left">The <strong>I²C</strong> protocol is used to interface advanced components using two digital signals.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><img src="assets/2wire.png" alt="Two Wire" /></td>
+      <td style="text-align: left">Components labeled with the <strong>2-Wire</strong> tag need two pins to function. Typically, that includes one pin used for transmitting data, while the other pin carries a clock signal that acts as a metronome to synchronize with the data stream’s speed. The <strong>I²C</strong> protocol is a widely used standard that follows this principle.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="programming-terms">Programming Terms</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Term</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">Variable</code></td>
+      <td style="text-align: left">A <strong>variable</strong> is like a labelled box where we store data. This could be a number, a text, or even more complex data. We can change the contents of this box anytime in our program.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">Function</code></td>
+      <td style="text-align: left">A <strong>function</strong> is like a mini-program within your program, built to perform a specific task. It can take inputs, process them, and return an output. They are reusable, modular components that can simplify writing and reading code, by breaking it down into smaller, well-structured segments.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">Loop</code></td>
+      <td style="text-align: left">A <strong>loop</strong> in programming is like a conveyor belt. It will keep repeating the same set of instructions over and over for a predetermined number of times or until a certain condition is met.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">Conditional Statement</code></td>
+      <td style="text-align: left">A <strong>Conditional Statement</strong> acts like a decision-making crossroad in a program. It checks a condition (for example, if a specific variable is set to False) and tells the program how to proceed based on that.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">Comment</code></td>
+      <td style="text-align: left">A <strong>comment</strong> is a way to add notes or explanations to the code. They are meant to be read by programmers/humans and are completely ignored by the computer. They start with a <code class="language-plaintext highlighter-rouge">#</code> character in CircuitPython.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">Declaration</code></td>
+      <td style="text-align: left">A <strong>declaration</strong> in programming informs the system about a variable, function, or other entity before its actual use in the code.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">Class</code></td>
+      <td style="text-align: left">A <strong>class</strong> is a blueprint from which objects are created, similar to the blueprint of a car or architectural plans for a house. A class defines specific properties objects created from it can have, such as “model” and “color”, as well as functions (methods) they can perform, like <code class="language-plaintext highlighter-rouge">closeDoor()</code> or  <code class="language-plaintext highlighter-rouge">openWindow()</code>. This allows programmers to create multiple objects, like different cars, that share common behaviors but have varied properties. (For instance,  <code class="language-plaintext highlighter-rouge">Car</code> would be the class, while “Frank’s blue Hyundai” would be an object created from that class.)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">Object</code></td>
+      <td style="text-align: left">An <strong>object</strong> is an entity created from a class, much like a car built using a specific blueprint. It holds unique attributes and performs actions, termed methods, defined by its class (see above). This allows for the creation of varied objects, each with unique data, but all adhering to behaviors and characteristics defined by their class.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">Instance</code></td>
+      <td style="text-align: left">An <strong>instance</strong> is like a single product produced from a factory assembly line. The factory is the class and the product is the object. To create an object instance, for example, “Frank’s Car”, we would use the <code class="language-plaintext highlighter-rouge">Car</code> class and specify both the model and color. This might look like <code class="language-plaintext highlighter-rouge">franks_car = Car("Hyundai", "Blue")</code>. This statement creates a new instance of the <code class="language-plaintext highlighter-rouge">Car</code> class named <code class="language-plaintext highlighter-rouge">franks_car</code>, representing a blue Hyundai.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">Method</code></td>
+      <td style="text-align: left">A <strong>method</strong> is a function attached to an object. It defines the actions that the object can perform and can modify the object’s state, much like real-world objects can perform actions based on their design. For instance, in the context of the <code class="language-plaintext highlighter-rouge">Car</code> class, a method might be named <code class="language-plaintext highlighter-rouge">openWindow()</code>. When this method is invoked on a car object, such as with <code class="language-plaintext highlighter-rouge">franks_car.openWindow()</code>, it would perform the action of opening the car’s window, as defined in the class.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">Library</code>, <code class="language-plaintext highlighter-rouge">Module</code></td>
+      <td style="text-align: left"><strong>Libraries</strong> and <strong>modules</strong> contain code written by other people to fulfill specific tasks. Core modules, such as <code class="language-plaintext highlighter-rouge">board</code>, <code class="language-plaintext highlighter-rouge">digitalio</code>, and <code class="language-plaintext highlighter-rouge">time</code> provide functionality essential to working with your board. Therefore, they are already included in CircuitPython. In some cases, you may need to download additional libraries to add functionality, such as drivers for specific sensors, to your code. You can learn more about that subject by reading the chapter on CircuitPython Libraries in <a href="learn.adafruit.com/welcome-to-circuitpython/circuitpython-libraries">Adafruit’s guide</a>.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">API</code></td>
+      <td style="text-align: left">Application Programming Interfaces (<strong>API</strong>s) define how different programs communicate, establishing fixed rules for their interactions. Think of an API as a restaurant menu: it details how one program can request specific actions or data from another, enabling different programs to interact and share capabilities or information.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">MAC Address</code></td>
+      <td style="text-align: left">A <strong>MAC address</strong> (Media Access Control address) is a unique hardware address used to identify devices on a network.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="electronics-terms">Electronics Terms</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Term</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong><code class="language-plaintext highlighter-rouge">Series</code></strong></td>
+      <td style="text-align: left">In a <strong>series</strong> circuit, each component is connected end-to-end with the other components, creating a single path for current to flow. This means that the current flowing through each component in the circuit is the same, but the voltage across each component differs.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">Parallel</code></td>
+      <td style="text-align: left">In a <strong>parallel</strong> circuit, components are connected side-by-side, creating multiple paths for current to flow. This means that the current flowing through each component in the circuit can differ, but the voltage across each component is the same.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">Voltage</code></td>
+      <td style="text-align: left"><strong>Voltage</strong>, measured in Volts (<strong>V</strong>), is the electric potential difference between two points in a circuit. It can be thought of as the force that pushes electric charge through a circuit, driving the flow of current. Like water pressure in a pipe, voltage pushes the current through the circuit.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">Current</code></td>
+      <td style="text-align: left"><strong>Current</strong>, measured in Amperes (<strong>A</strong>), is the flow of electric charge in a circuit. If you think of a circuit as a hose, the current would be the flow of water through the hose. It’s determined by the voltage and the resistance in the circuit according to <strong>Ohm’s Law:</strong> <strong>I = V / R</strong>, where <strong>I</strong> is current, <strong>V</strong> is voltage, and <strong>R</strong> is resistance.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">Resistance</code></td>
+      <td style="text-align: left"><strong>Resistance</strong>, measured in Ohms (<strong>Ω</strong>), is the opposition to the flow of electric current in a circuit. It’s like friction for electricity, making it harder for current to flow. Different materials and objects have different levels of resistance, which can affect the current and voltage in a circuit. Ohm’s Law also relates resistance to voltage (<strong>V</strong>) and current (<strong>I</strong>).</td>
+    </tr>
+  </tbody>
+</table>

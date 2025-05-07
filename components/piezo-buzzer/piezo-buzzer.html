@@ -1,0 +1,144 @@
+<p><img src="assets/Grove-Piezo-Buzzer.png" alt="Piezo Buzzer" width="250" /></p>
+
+<h1 id="piezo-buzzer">Piezo Buzzer</h1>
+<p><a href="../../glossary/glossary"><img src="../../glossary/assets/output.png" alt="Output" width="72" /></a> <a href="../../glossary/glossary"><img src="../../glossary/assets/pwm.png" alt="PWM" width="72" /></a></p>
+
+<p>Can generate beeping sounds and melodies.</p>
+
+<p>Technical information on this component is available <a href="https://wiki.seeedstudio.com/Grove-Buzzer/">here</a>.</p>
+
+<hr />
+
+<h2 id="background">Background</h2>
+
+<p>A Piezo Buzzer is an electronic component commonly used to generate audible signals or alarms in electronic circuits. The buzzer included in the kit is an active buzzer. That means a simple digital signal can turn the buzzer on and off, like a digital component. When powered on that way, the buzzer uses an internal oscillator to produce a sound at a fixed frequency. Alternatively, the buzzer can be driven using a PWM signal to create different tones or melodies for more advanced use cases.</p>
+
+<h2 id="basic-usage">Basic Usage</h2>
+
+<p>The code example below treats the buzzer like a digital component connected to pin <strong>D4</strong>, turning it on and off. It acts as a simple acoustic alarm at the fixed frequency set by the buzzer’s internal oscillator.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">digitalio</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">piezo_buzzer</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">DigitalInOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D4</span><span class="p">)</span>
+<span class="n">piezo_buzzer</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">Direction</span><span class="p">.</span><span class="n">OUTPUT</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span>
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">piezo_buzzer</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">piezo_buzzer</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="define-a-tone-using-pulse-width-modulation-pwm">Define a Tone using Pulse-Width Modulation (PWM)</h2>
+
+<p>The previous example turned the buzzer either fully on or off to produce rather annoying sounds. Here, we use a method called <strong>pulse-width modulation</strong> (<strong><code class="language-plaintext highlighter-rouge">PWM</code></strong>) to manage the frequency and duration of the signal driving the buzzer, letting us control the pitch of the sound.</p>
+
+<p>To produce <code class="language-plaintext highlighter-rouge">PWM</code> signals, we use the <code class="language-plaintext highlighter-rouge">pwmio</code> module. It provides the <code class="language-plaintext highlighter-rouge">pwmio.PWMOut()</code> method, allowing us to specify the pin to use and that we want to vary the frequency of our PWM signal.</p>
+
+<p class="highlight">Pins that support <strong>PWM</strong> are denoted by a <strong><code class="language-plaintext highlighter-rouge">~</code></strong> beside their names on the BitsyExpander board.</p>
+
+<p>Next, we choose the frequency of our signal, indicating how many times it repeats itself in one second. A value of 262 Hz (or 262 repetitions per second) will cause the piezoelectric element of the buzzer to vibrate at that rate, producing the musical note C4 (middle C).</p>
+
+<p>In the main loop, we generate our tone by setting the PWM signal’s duty cycle using <code class="language-plaintext highlighter-rouge">piezo_buzzer.duty_cycle</code>. The expression <code class="language-plaintext highlighter-rouge">10 * 65535 // 100</code> creates a 10% duty cycle, providing good volume and minimal distortion. (Higher values slightly increase the volume but cause distortions due to the buzzer’s internal oscillator.) To silence the buzzer, we set the duty cycle to 0%.</p>
+
+<blockquote class="highlight">
+  <p>A PWM signal’s duty cycle represents the time the signal is “on” during each repetition. Therefore, a duty cycle of 10% means the signal is on 10% and off 90% of the time.</p>
+
+  <p><img src="assets/10_pc_duty.gif" alt="10 Percent Duty Cycle Animation" style="mix-blend-mode: darken" /></p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">pwmio</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">piezo_buzzer</span> <span class="o">=</span> <span class="n">pwmio</span><span class="p">.</span><span class="n">PWMOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D4</span><span class="p">,</span> <span class="n">variable_frequency</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">piezo_buzzer</span><span class="p">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="mi">262</span>
+<span class="n">duty_cycle_val</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">65535</span> <span class="o">//</span> <span class="mi">100</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span>
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">piezo_buzzer</span><span class="p">.</span><span class="n">duty_cycle</span> <span class="o">=</span> <span class="n">duty_cycle_val</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">piezo_buzzer</span><span class="p">.</span><span class="n">duty_cycle</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="playing-a-melody">Playing a Melody</h2>
+<p>Building on the previous example, let’s explore how to create and play back a melody. Instead of defining one fixed tone value, we program a function to play individual tones with a specified frequency, duration, and ensuing pause. We define a melody using an array, where each entry represents a note and its characteristics. In the main loop, we iterate through the melody array, playing each note using the <code class="language-plaintext highlighter-rouge">play_tone</code> function we have written.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">pwmio</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">piezo_buzzer</span> <span class="o">=</span> <span class="n">pwmio</span><span class="p">.</span><span class="n">PWMOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D4</span><span class="p">,</span> <span class="n">variable_frequency</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">duty_cycle_val</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">65535</span> <span class="o">//</span> <span class="mi">100</span>  <span class="c1"># A 10% Duty Cycle produces cleaner sounding tones on an active buzzer
+</span>
+<span class="c1"># --- Functions
+</span><span class="k">def</span> <span class="nf">play_tone</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">pause</span><span class="p">):</span>
+    <span class="n">piezo_buzzer</span><span class="p">.</span><span class="n">frequency</span> <span class="o">=</span> <span class="n">freq</span>
+    <span class="n">piezo_buzzer</span><span class="p">.</span><span class="n">duty_cycle</span> <span class="o">=</span> <span class="n">duty_cycle_val</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>           <span class="c1"># Duration of note
+</span>    <span class="n">piezo_buzzer</span><span class="p">.</span><span class="n">duty_cycle</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># Off
+</span>    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">pause</span><span class="p">)</span>              <span class="c1"># Pause after note
+</span>
+<span class="c1"># --- Setup
+</span><span class="n">melody_ducklings</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">294</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">330</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">349</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">392</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span> <span class="p">[</span><span class="mi">392</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">440</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">440</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">440</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">440</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">392</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">440</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">440</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">440</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">440</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">392</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">349</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">349</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">349</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">349</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">330</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span> <span class="p">[</span><span class="mi">330</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">294</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">294</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">294</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">294</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">]</span>
+    <span class="p">]</span>
+
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">melody_ducklings</span><span class="p">:</span>
+        <span class="n">play_tone</span><span class="p">(</span><span class="n">note</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">note</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">note</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The example code above plays back a German nursery rhyme. You can replace the melody array with one of the following ones, representing a French nursery rhyme and a Dutch one, respectively:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">melody_jaques</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">294</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">330</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span> 
+    <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">294</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">330</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">330</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">349</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">392</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span> 
+    <span class="p">[</span><span class="mi">330</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">349</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">392</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">392</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">440</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">392</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">349</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">330</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">392</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">440</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">392</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">349</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">330</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],[</span><span class="mi">196</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],[</span><span class="mi">196</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">]</span>
+    <span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">melody_rijsttafel</span> <span class="o">=</span> <span class="p">[</span>    
+    <span class="p">[</span><span class="mi">349</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">392</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">392</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">440</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">523</span><span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">466</span><span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">440</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">349</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">392</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">262</span><span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">294</span><span class="p">,</span> <span class="mf">0.125</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">349</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">349</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">]</span> 
+</code></pre></div></div>
+
+<blockquote class="note-title">
+  <p>For the musicians amongst you</p>
+
+  <p>Both these examples are written to resemble a musical meter called “common time.” In this case, the values for duration and pause in each measure (represented as one line in the array formatting) add up to two seconds (where each half second corresponds to a quarter note). You can  consult a <a href="https://www.google.com/search?q=Music Note to Frequency Chart">Music Note To Frequency  Chart</a> to help you use this blueprint to encode your own melody or sheet music into an array.</p>
+</blockquote>

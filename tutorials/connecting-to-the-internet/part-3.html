@@ -1,0 +1,96 @@
+<h1 id="part-3---connect-to-a-wifi-network">Part 3 - Connect to a WiFi Network</h1>
+
+<p>To connect your ItsyBitsy to a network, you must provide a network name (SSID) and password. However, directly using sensitive data like WiFi passwords in your code is risky. Therefore, creating a separate file to hold your personal keys and passwords outside your <code class="language-plaintext highlighter-rouge">code.py</code> file is a good idea. This way, you can share your code without revealing sensitive data to others.</p>
+
+<ol>
+  <li>
+    <p>Begin by clicking the <strong><code class="language-plaintext highlighter-rouge">+</code></strong> icon labeled <strong>New</strong> in the top toolbar of Mu Editor.</p>
+  </li>
+  <li>
+    <p>Copy and paste the following code to the new file, replacing <code class="language-plaintext highlighter-rouge">network-name</code> with the name of your WiFi network and <code class="language-plaintext highlighter-rouge">network-passwd</code> with your network’s password (or the iPSK generated during <a href="part-2">part two</a> when connecting to TUD-facility).</p>
+  </li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">settings</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"ssid"</span><span class="p">:</span> <span class="s">"network-name"</span><span class="p">,</span>
+    <span class="s">"password"</span><span class="p">:</span> <span class="s">"network-passwd"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p>Click the <strong>Save</strong> button in the toolbar and save the file on your <code class="language-plaintext highlighter-rouge">CIRCUITPY</code> drive using the name <code class="language-plaintext highlighter-rouge">settings.py</code>.</p>
+  </li>
+  <li>
+    <p>Enter your <code class="language-plaintext highlighter-rouge">code.py</code> file and replace the code you wrote in <a href="part-1">part one</a> with the code below, then hit <strong>Save</strong>.</p>
+  </li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">busio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">digitalio</span>
+<span class="kn">from</span> <span class="nn">adafruit_esp32spi</span> <span class="kn">import</span> <span class="n">adafruit_esp32spi</span>
+
+<span class="c1"># Get WiFi details from your settings.py file
+</span><span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="n">settings</span>
+
+<span class="c1"># Define the pins used by the BitsyExpander's ESP32 WiFi module
+</span><span class="n">esp32_cs</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">DigitalInOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D9</span><span class="p">)</span>
+<span class="n">esp32_ready</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">DigitalInOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D11</span><span class="p">)</span>
+<span class="n">esp32_reset</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">DigitalInOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D12</span><span class="p">)</span>
+<span class="n">spi</span> <span class="o">=</span> <span class="n">busio</span><span class="p">.</span><span class="n">SPI</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">SCK</span><span class="p">,</span> <span class="n">board</span><span class="p">.</span><span class="n">MOSI</span><span class="p">,</span> <span class="n">board</span><span class="p">.</span><span class="n">MISO</span><span class="p">)</span>
+
+<span class="c1"># Initialize the ESP32 WiFi module
+</span><span class="n">esp</span> <span class="o">=</span> <span class="n">adafruit_esp32spi</span><span class="p">.</span><span class="n">ESP_SPIcontrol</span><span class="p">(</span><span class="n">spi</span><span class="p">,</span> <span class="n">esp32_cs</span><span class="p">,</span> <span class="n">esp32_ready</span><span class="p">,</span> <span class="n">esp32_reset</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">esp</span><span class="p">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">adafruit_esp32spi</span><span class="p">.</span><span class="n">WL_IDLE_STATUS</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">ESP32 WiFi Module found."</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Firmware version:"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">esp</span><span class="p">.</span><span class="n">firmware_version</span><span class="p">,</span> <span class="s">"utf-8"</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"*"</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Scanning for available networks...</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">network_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">ap</span><span class="p">[</span><span class="s">"ssid"</span><span class="p">],</span> <span class="s">"utf-8"</span><span class="p">)</span> <span class="k">for</span> <span class="n">ap</span> <span class="ow">in</span> <span class="n">esp</span><span class="p">.</span><span class="n">scan_networks</span><span class="p">()]</span>    
+<span class="k">if</span> <span class="n">settings</span><span class="p">[</span><span class="s">"ssid"</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">network_list</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">"ssid"</span><span class="p">],</span> <span class="s">"not found.</span><span class="se">\n</span><span class="s">Available networks:"</span><span class="p">,</span> <span class="n">network_list</span><span class="p">)</span> 
+    <span class="k">raise</span> <span class="nb">SystemExit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+         
+<span class="k">print</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">"ssid"</span><span class="p">],</span> <span class="s">"found. Connecting..."</span><span class="p">)</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">esp</span><span class="p">.</span><span class="n">is_connected</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">esp</span><span class="p">.</span><span class="n">connect_AP</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s">"ssid"</span><span class="p">],</span> <span class="n">settings</span><span class="p">[</span><span class="s">"password"</span><span class="p">])</span>
+    <span class="k">except</span> <span class="p">(</span><span class="nb">RuntimeError</span><span class="p">,</span> <span class="nb">ConnectionError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Unable to establish connection. Are you using a valid password?"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Error message:"</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">Retrying..."</span><span class="p">)</span>
+        <span class="k">continue</span>
+         
+<span class="k">print</span><span class="p">(</span><span class="s">"Connected! IP address:"</span><span class="p">,</span> <span class="n">esp</span><span class="p">.</span><span class="n">pretty_ip</span><span class="p">(</span><span class="n">esp</span><span class="p">.</span><span class="n">ip_address</span><span class="p">))</span>
+          
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Pinging google.com..."</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">esp</span><span class="p">.</span><span class="n">ping</span><span class="p">(</span><span class="s">"google.com"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Ping successful. Response time:"</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="s">"ms"</span><span class="p">)</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p>Open Mu’s <code class="language-plaintext highlighter-rouge">Serial Monitor</code> to verify that the microcontroller successfully connects to the chosen network and can get a response from <code class="language-plaintext highlighter-rouge">google.com</code>.</p>
+  </li>
+  <li>
+    <p>Note the differences from the code you encountered in <a href="part-1">part one</a> of this tutorial:</p>
+
+    <ul>
+      <li>An <code class="language-plaintext highlighter-rouge">import</code> statement for your newly created <code class="language-plaintext highlighter-rouge">settings.py</code> file has been added. This gives the code access to the network name (SSID) and password.</li>
+      <li>The network scan has been moved out of the <code class="language-plaintext highlighter-rouge">while True:</code> loop and is performed once before entering the loop.</li>
+      <li>The code verifies the network you configured is available and waits for the successful establishment of a connection.</li>
+      <li>The content of the <code class="language-plaintext highlighter-rouge">while True:</code> loop has been replaced: It now pings google.com and reports the response time. This confirms internet connectivity for your microcontroller.</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<blockquote class="highlight">
+  <p>Your ItsyBitsy is now ready for connecting to the internet or even other ItsyBitsy’s! Good luck with your connected projects ;-)</p>
+</blockquote>

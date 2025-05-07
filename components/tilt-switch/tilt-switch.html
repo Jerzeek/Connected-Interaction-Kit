@@ -1,0 +1,33 @@
+<p><img src="assets/custom-tilt-switch-centered.png" alt="Custom Tilt Switch" width="250" /></p>
+
+<h1 id="tilt-switch">Tilt Switch</h1>
+<p><a href="../../glossary/glossary"><img src="../../glossary/assets/input.png" alt="Input" width="72" /></a> <a href="../../glossary/glossary"><img src="../../glossary/assets/digital.png" alt="Digital" width="72" /></a></p>
+
+<p>Detects if it has been tilted beyond a certain point.</p>
+
+<p>Learn how to make your own tilt switch <a href="../../tutorials/assembling-custom-components/tilt-switch">here</a>.</p>
+
+<hr />
+
+<h2 id="basic-tilt-switch-example">Basic tilt switch example</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">digitalio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">tilt_switch</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">DigitalInOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D13</span><span class="p">)</span>
+<span class="n">tilt_switch</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">Direction</span><span class="p">.</span><span class="n">INPUT</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span>
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">tilt_switch</span><span class="p">.</span><span class="n">value</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"False"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"True"</span><span class="p">)</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>  <span class="c1"># Make the loop run a little bit slower
+</span></code></pre></div></div>

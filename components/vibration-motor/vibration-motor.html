@@ -1,0 +1,104 @@
+<p><img src="assets/Grove-Vibration-Motor.png" alt="Vibration Motor" width="250" /></p>
+
+<h1 id="vibration-motor">Vibration Motor</h1>
+<p><a href="../../glossary/glossary"><img src="../../glossary/assets/output.png" alt="Output" width="72" /></a> <a href="../../glossary/glossary"><img src="../../glossary/assets/pwm.png" alt="PWM" width="72" /></a></p>
+
+<p>Creates vibration that can be used to generate patterns comparable to cell phone alarms.</p>
+
+<p>Technical information on this component is available <a href="https://wiki.seeedstudio.com/Grove-Vibration_Motor/">here</a>.</p>
+
+<hr />
+
+<h2 id="basic-usage">Basic Usage</h2>
+<p>The code example below treats the vibration motor like a digital component connected to pin <strong>D4</strong>, turning it on and off. That way, the motor can generate haptic feedback and alarms using the highest feedback intensity.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">digitalio</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">vibration_motor</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">DigitalInOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D4</span><span class="p">)</span>
+<span class="n">vibration_motor</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">Direction</span><span class="p">.</span><span class="n">OUTPUT</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span>
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">vibration_motor</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">vibration_motor</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="modulating-intensity-using-pulse-width-modulation">Modulating Intensity using Pulse-Width Modulation</h2>
+
+<p>Instead of turning the vibration motor either entirely on or off, it can also create vibration at intermediate states. The example code below uses Pulse-Width Modulation (<code class="language-plaintext highlighter-rouge">PWM</code>) to ramp up the intensity of the motor in 64 steps between 0 (0%) and 65535 (100%).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">pwmio</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">vibration_motor</span> <span class="o">=</span> <span class="n">pwmio</span><span class="p">.</span><span class="n">PWMOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D4</span><span class="p">)</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span>
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    
+    <span class="c1"># Count up from 0 to 65535, with 64 increment
+</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">65535</span><span class="p">,</span> <span class="mi">64</span><span class="p">):</span>
+        <span class="n">vibration_motor</span><span class="p">.</span><span class="n">duty_cycle</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.002</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="highlight-yellow">To learn more about PWM signals, refer to the <a href="../piezo-buzzer/piezo-buzzer#define-a-tone-using-pulse-width-modulation-pwm">Piezo Buzzer</a> example. Unlike the Piezo Buzzer example, a variable frequency is unnecessary for using the Vibration Motor.</p>
+
+<h2 id="creating-vibration-alarm-patterns">Creating Vibration Alarm Patterns</h2>
+
+<p>This last example uses a function called <code class="language-plaintext highlighter-rouge">vibration_alarm</code> to simplify playing back alarm patterns. It takes three parameters: intensity, duration, and pause. <code class="language-plaintext highlighter-rouge">intensity</code> is the vibration motor’s intensity in percentage, <code class="language-plaintext highlighter-rouge">duration</code> is the time the motor will vibrate, and <code class="language-plaintext highlighter-rouge">pause</code> is the time the motor will be idle before the next vibration. In the main loop, the program iterates over each element of the alarm, activating the vibration motor with the corresponding intensity, duration, and pause. This allows you to use arrays to define vibration patterns instead of writing out the individual steps for vibration and pauses every time.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">pwmio</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">vibration_motor</span> <span class="o">=</span> <span class="n">pwmio</span><span class="p">.</span><span class="n">PWMOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D4</span><span class="p">)</span>
+
+<span class="c1"># --- Functions
+</span><span class="k">def</span> <span class="nf">vibration_alarm</span><span class="p">(</span><span class="n">intensity</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">pause</span><span class="p">):</span>
+    <span class="n">vibration_motor</span><span class="p">.</span><span class="n">duty_cycle</span> <span class="o">=</span> <span class="n">intensity</span> <span class="o">*</span> <span class="mi">65535</span> <span class="o">//</span> <span class="mi">100</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>              <span class="c1"># Duration of vibration
+</span>    <span class="n">vibration_motor</span><span class="p">.</span><span class="n">duty_cycle</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># Disable vibration
+</span>    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">pause</span><span class="p">)</span>                 <span class="c1"># Pause after vibration
+</span>
+<span class="c1"># --- Setup
+</span>
+<span class="n">alarm_1</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+    <span class="p">]</span>
+
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+
+    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">alarm_1</span><span class="p">:</span>
+        <span class="n">vibration_alarm</span><span class="p">(</span><span class="n">note</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">note</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">note</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Here are two more alarm pattern examples:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">alarm_2</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">]</span>
+    <span class="p">]</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">alarm_3</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="mi">70</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mi">70</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span> <span class="p">[</span><span class="mi">70</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]</span>
+    <span class="p">]</span>
+</code></pre></div></div>

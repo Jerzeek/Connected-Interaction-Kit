@@ -1,0 +1,93 @@
+<p><img src="assets/custom-rotation-pot-centered.png" alt="Custom Rotation Potentiometer" width="250" /></p>
+
+<h1 id="rotary-potentiometer">Rotary Potentiometer</h1>
+<p><a href="../../glossary/glossary"><img src="../../glossary/assets/input.png" alt="Input" width="72" /></a> <a href="../../glossary/glossary"><img src="../../glossary/assets/analog.png" alt="Analog" width="72" /></a></p>
+
+<p>Changes its electrical resistance based on its rotation angle. Can detect rotation angles between 0° and 270°.</p>
+
+<p>Learn how to make your own rotary potentiometer <a href="../../tutorials/assembling-custom-components/potentiometer">here</a>.</p>
+
+<hr />
+
+<h2 id="background">Background</h2>
+
+<h3 id="what-is-a-potentiometer">What is a Potentiometer?</h3>
+
+<p>Potentiometers are a type of variable resistor consisting of a resistive track with electrical contacts at both ends. Like a fixed-value resistor, potentiometers have a fixed resistance value between both ends (for example, 10 kΩ.) A third, movable contact is located between both ends. This contact (called wiper) allows us to achieve a variable resistance by flowing electricity through a shorter portion of the resistive track.</p>
+
+<h2 id="basic-usage">Basic Usage</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">analogio</span>
+
+<span class="c1"># --- Variables
+# Initialize analog input connected to rotation potentiometer
+</span><span class="n">potentiometer</span> <span class="o">=</span> <span class="n">analogio</span><span class="p">.</span><span class="n">AnalogIn</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">A2</span><span class="p">)</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span>
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">potentiometer</span><span class="p">.</span><span class="n">value</span> <span class="c1"># Read the potentiometer value
+</span>    <span class="k">print</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="c1"># Output the value in the serial monitor
+</span>    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>  <span class="c1"># Make the loop run a little bit slower
+</span></code></pre></div></div>
+
+<h2 id="rotation-potentiometer-example-with-conversion-to-voltage">Rotation potentiometer example with conversion to voltage</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">analogio</span>
+
+<span class="c1"># --- Variables
+# Initialize analog input connected to rotation potentiometer
+</span><span class="n">potentiometer</span> <span class="o">=</span> <span class="n">analogio</span><span class="p">.</span><span class="n">AnalogIn</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">A2</span><span class="p">)</span>
+
+<span class="c1"># --- Functions
+# Make a function to convert from analog value to voltage.
+</span><span class="k">def</span> <span class="nf">analog_voltage</span><span class="p">(</span><span class="n">adc</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">adc</span><span class="p">.</span><span class="n">value</span> <span class="o">/</span> <span class="mi">65535</span> <span class="o">*</span> <span class="n">adc</span><span class="p">.</span><span class="n">reference_voltage</span>
+
+<span class="c1"># --- Setup
+</span>
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">potentiometer</span><span class="p">.</span><span class="n">value</span> <span class="c1"># Read the photo resistor value
+</span>    <span class="n">volts</span> <span class="o">=</span> <span class="n">analog_voltage</span><span class="p">(</span><span class="n">potentiometer</span><span class="p">)</span> <span class="c1"># Convert to voltage
+</span>
+    <span class="c1"># Print the values
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">'Photo resistor value: {0} voltage: {1}V'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">volts</span><span class="p">))</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>  <span class="c1"># Make the loop run a little bit slower
+</span></code></pre></div></div>
+
+<h2 id="rotation-potentiometer-example-with-angle-mapping">Rotation potentiometer example with angle mapping</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">analogio</span>
+
+<span class="c1"># --- Variables
+# Initialize analog input connected to rotation potentiometer
+</span><span class="n">potentiometer</span> <span class="o">=</span> <span class="n">analogio</span><span class="p">.</span><span class="n">AnalogIn</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">A2</span><span class="p">)</span>
+
+<span class="c1"># --- Functions
+# Make a function to convert from analog value to 270 degrees
+</span><span class="k">def</span> <span class="nf">get_angle</span><span class="p">(</span><span class="n">adc</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">adc</span><span class="p">.</span><span class="n">value</span> <span class="o">/</span> <span class="mi">65535</span> <span class="o">*</span> <span class="mi">270</span>
+
+<span class="c1"># --- Setup
+</span>
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">potentiometer</span><span class="p">.</span><span class="n">value</span> <span class="c1"># Read the photo resistor value
+</span>    <span class="n">angle</span> <span class="o">=</span> <span class="n">get_angle</span><span class="p">(</span><span class="n">potentiometer</span><span class="p">)</span> <span class="c1"># Convert to voltage
+</span>
+    <span class="c1"># Print the values
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">'Potentiometer value: {0} Angle: {1}º'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">angle</span><span class="p">))</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>  <span class="c1"># Make the loop run a little bit slower
+</span></code></pre></div></div>
+

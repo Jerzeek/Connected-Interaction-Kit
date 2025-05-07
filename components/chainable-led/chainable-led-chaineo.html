@@ -1,0 +1,153 @@
+<p><img src="assets/ChaiNEO-RGBW.png" alt="Chainable RGB LED" width="250" /></p>
+
+<h1 id="chainable-rgbw-led-chaineo">Chainable RGB/W LED (ChaiNEO)</h1>
+<p><a href="../../glossary/glossary"><img src="../../glossary/assets/output.png" alt="Output" width="72" /></a> <a href="../../glossary/glossary"><img src="../../glossary/assets/digital.png" alt="Digital" width="72" /></a></p>
+
+<p>A light source that can produce RGB colored and white light. Can be daisy chained.</p>
+
+<p>This component is based on an <a href="https://www.adafruit.com/product/2758">RGB/W LED</a> sold by Adafruit and is compatible with their NeoPixel library. Extensive information on NeoPixel components and their use is available <a href="https://learn.adafruit.com/adafruit-neopixel-uberguide/the-magic-of-neopixels">here</a>.</p>
+
+<p class="important">Before proceeding, make sure your LED module looks like the illustration above. If you are not sure if this is the correct version, refer to this <a href="chainable-led">overview</a>.</p>
+
+<hr />
+
+<h2 id="wiring">Wiring</h2>
+
+<p class="highlight">Confirm that the ChaiNEO module is oriented correctly, with the input port (marked “<strong>IN</strong>”, at the base of the arrow) connected to the Grove connector on your BitsyExpander Board or the previous LED in your chain.</p>
+
+<h2 id="preparation">Preparation</h2>
+
+<p>The ChaiNEO modules use a <a href="https://www.adafruit.com/product/2758">Neopixel-compatible RGB/W LED</a>. To easily control them in code, the <code class="language-plaintext highlighter-rouge">neopixel</code> <a href="../../glossary/glossary">library</a> is needed. The library should be pre-loaded on the ItsyBitsy Microcontroller included in your kit.</p>
+
+<p class="highlight">You can verify that the library is installed by ensuring a file called <code class="language-plaintext highlighter-rouge">neopixel.mpy</code> is present in the <code class="language-plaintext highlighter-rouge">lib</code> folder of your <code class="language-plaintext highlighter-rouge">CIRCUITPY</code> drive. If not, download Adafruit’s Library Bundle for Version 8.x <a href="https://circuitpython.org/libraries">here</a>. Extract the needed file from the bundle and place it in the <code class="language-plaintext highlighter-rouge">lib</code> folder on your microcontroller. You can learn more about libraries and their use in the <a href="../../glossary/glossary">Glossary</a> or the <a href="/Tutorials">../../Tutorials</a>.</p>
+
+<p>The examples below assume your component is connected to the connector labeled  <strong>D13</strong> on the BitsyExpander Board.</p>
+
+<h2 id="making-a-chainable-rgbw-led-blink">Making a Chainable RGB/W LED blink</h2>
+
+<p>This example uses the <code class="language-plaintext highlighter-rouge">fill()</code> <a href="../../glossary/glossary">function</a> to set the brightness of each color channel <code class="language-plaintext highlighter-rouge">(RED, GREEN, BLUE, WHITE)</code> to a value between 0 to 255. The value 0 corresponds to off, while 255 means fully on. A bright white LED, for example, is defined by <code class="language-plaintext highlighter-rouge">(0, 0, 0, 255)</code> and a bright red one is <code class="language-plaintext highlighter-rouge">(255, 0, 0, 0)</code>. <code class="language-plaintext highlighter-rouge">(255, 0, 255, 0)</code> mixes red and blue to make the LED appear purple, while <code class="language-plaintext highlighter-rouge">(0, 0, 0, 0)</code> will turn it off. Use values between 0 and 255 to vary the brightness level and mix different colors.</p>
+
+<p>During the setup phase, we use the <code class="language-plaintext highlighter-rouge">fill()</code> function and pass it the value <code class="language-plaintext highlighter-rouge">0</code> to ensure all LEDs are off on startup, as in this context, <code class="language-plaintext highlighter-rouge">0</code> is identical to <code class="language-plaintext highlighter-rouge">(0, 0, 0, 0)</code>. The <code class="language-plaintext highlighter-rouge">show()</code> function is called to display the new values defined using <code class="language-plaintext highlighter-rouge">fill()</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">neopixel</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">pin_leds</span> <span class="o">=</span> <span class="n">board</span><span class="p">.</span><span class="n">D13</span>
+
+<span class="n">num_leds</span> <span class="o">=</span> <span class="mi">1</span> 
+<span class="n">leds</span> <span class="o">=</span> <span class="n">neopixel</span><span class="p">.</span><span class="n">NeoPixel</span><span class="p">(</span><span class="n">pin_leds</span><span class="p">,</span> <span class="n">num_leds</span><span class="p">,</span> <span class="n">auto_write</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">pixel_order</span><span class="o">=</span><span class="n">neopixel</span><span class="p">.</span><span class="n">GRBW</span><span class="p">)</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span><span class="n">leds</span><span class="p">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">leds</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"ON"</span><span class="p">)</span>
+    <span class="n">leds</span><span class="p">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">leds</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">print</span><span class="p">(</span><span class="s">"OFF"</span><span class="p">)</span>
+    <span class="n">leds</span><span class="p">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">leds</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="note">At the end of our neopixel <a href="../../glossary/glossary">object</a>  <a href="../../glossary/glossary">declaration</a> , we define <code class="language-plaintext highlighter-rouge">pixel_order=neopixel.GRBW</code>. This does <em>not</em> mean that our code expects us to provide color information in that order; it describes the configuration of the LED itself. The code still expects color information to be arranged in the order <code class="language-plaintext highlighter-rouge">(RED, GREEN, BLUE, WHITE)</code>. If you buy other NeoPixel-compatible components online, the <code class="language-plaintext highlighter-rouge">pixel_order</code> value may need to be configured differently. A comprehensive guide on how to use different kinds of NeoPixels is available <a href="https://learn.adafruit.com/circuitpython-essentials/circuitpython-neopixel">here</a>.</p>
+
+<h2 id="fading-a-chainable-rgbw-led-in-and-out">Fading a Chainable RGB/W LED in and out</h2>
+
+<p>This example uses a <code class="language-plaintext highlighter-rouge">for</code> <a href="../../glossary/glossary">loop</a> to increase and decrease the brightness of an LED on each run through the loop. The <code class="language-plaintext highlighter-rouge">sleep()</code> function is used to slow down the speed at which the loop iterates.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">neopixel</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">pin_leds</span> <span class="o">=</span> <span class="n">board</span><span class="p">.</span><span class="n">D13</span>
+
+<span class="n">num_leds</span> <span class="o">=</span> <span class="mi">1</span> 
+<span class="n">leds</span> <span class="o">=</span> <span class="n">neopixel</span><span class="p">.</span><span class="n">NeoPixel</span><span class="p">(</span><span class="n">pin_leds</span><span class="p">,</span> <span class="n">num_leds</span><span class="p">,</span> <span class="n">auto_write</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">pixel_order</span><span class="o">=</span><span class="n">neopixel</span><span class="p">.</span><span class="n">GRBW</span><span class="p">)</span>
+
+<span class="n">delta</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span><span class="n">leds</span><span class="p">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">leds</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Fading in..."</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">intensity</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
+        <span class="n">leds</span><span class="p">.</span><span class="n">fill</span><span class="p">((</span><span class="n">intensity</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">intensity</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">leds</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">"Fading out..."</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">intensity</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">delta</span><span class="p">):</span>
+        <span class="n">leds</span><span class="p">.</span><span class="n">fill</span><span class="p">((</span><span class="n">intensity</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">intensity</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">leds</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.04</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="note">Using the <code class="language-plaintext highlighter-rouge">sleep()</code> function to set the fading speed will prevent other code from executing while sleeping. This is called a blocking delay and does not work well when multitasking. You can read Adafruit’s tutorial on <a href="https://learn.adafruit.com/multi-tasking-with-circuitpython/no-sleeping">Multitasking with CircuitPython</a> to learn about a non-blocking alternative.</p>
+
+<h2 id="using-a-chain-with-multiple-leds">Using a chain with multiple LEDs</h2>
+
+<p>This example demonstrates how to address individual LEDs in a chain. As before, the <code class="language-plaintext highlighter-rouge">fill()</code> function is used, this time to define a common value for the entire chain. To specify a color for each LED individually, refer to the code below. Note that LEDs are indexed starting from 0, which refers to the first LED in the chain.</p>
+
+<p>Remember to use the <code class="language-plaintext highlighter-rouge">show()</code> function to write the newly defined color values to the LED chain.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">neopixel</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">pin_leds</span> <span class="o">=</span> <span class="n">board</span><span class="p">.</span><span class="n">D13</span>
+
+<span class="n">num_leds</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">leds</span> <span class="o">=</span> <span class="n">neopixel</span><span class="p">.</span><span class="n">NeoPixel</span><span class="p">(</span><span class="n">pin_leds</span><span class="p">,</span> <span class="n">num_leds</span><span class="p">,</span> <span class="n">auto_write</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">pixel_order</span><span class="o">=</span><span class="n">neopixel</span><span class="p">.</span><span class="n">GRBW</span><span class="p">)</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span><span class="n">leds</span><span class="p">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># turn off all LEDs
+</span><span class="n">leds</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    
+    <span class="c1"># set color values for the LEDs individually
+</span>    <span class="n">leds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># red
+</span>    <span class="n">leds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># green
+</span>    <span class="n">leds</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># blue
+</span>    <span class="n">leds</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    
+    <span class="c1"># make all LEDs white
+</span>    <span class="n">leds</span><span class="p">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span> <span class="c1"># white
+</span>    <span class="n">leds</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="additional-resources">Additional Resources</h2>
+
+<h3 id="adafruits-neopixel-überguide"><a href="https://learn.adafruit.com/adafruit-neopixel-uberguide/the-magic-of-neopixels">Adafruit’s NeoPixel Überguide</a></h3>
+<p>Everything there is to know about different types of NeoPixels, best practices, and how to use them.</p>
+
+<h3 id="neopixels-in-adafruits-circuitpython-essentials-guide"><a href="https://learn.adafruit.com/circuitpython-essentials/circuitpython-neopixel">NeoPixels in Adafruit’s CircuitPython Essentials Guide</a></h3>
+<p>A comprehensive overview of how to configure different kinds of NeoPixels, how to use them, as well as an overview of how to go beyond the basic use of the neopixel library, such as setting up rainbow and color chase effects.</p>
+
+<h3 id="neopixel-rgbw-smd-led"><a href="https://www.adafruit.com/product/2758">NeoPixel RGBW SMD LED</a></h3>
+<p>The product page of the LED used on the ChaiNEO Chainable RGB/W LED module containing technical details and a basic description.</p>

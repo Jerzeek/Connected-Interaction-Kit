@@ -1,0 +1,34 @@
+<h1 id="part-2---change-the-way-your-itsybitsy-behaves">Part 2 - Change the way your ItsyBitsy behaves</h1>
+
+<p>The pre-loaded code should look something like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">digitalio</span>
+<span class="kn">import</span> <span class="nn">time</span> 
+
+<span class="n">led</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">DigitalInOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D13</span><span class="p">)</span>
+<span class="n">led</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">Direction</span><span class="p">.</span><span class="n">OUTPUT</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">led</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"LED is on"</span><span class="p">)</span>
+    
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">led</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"LED is off"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>For now, let’s ignore the first half of the code and go directly to the passage that begins with <code class="language-plaintext highlighter-rouge">while True</code>:</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">while</code> statement creates a <code class="language-plaintext highlighter-rouge">loop</code>. While its condition is met, the code contained within it will keep looping. The lines of code that follow are indented, indicating that they are inside the loop. Given that the condition to meet is set to <code class="language-plaintext highlighter-rouge">True</code> (which will never be False), the code will loop forever.</p>
+
+<p>Try altering the code’s behavior by exploring the following changes:</p>
+
+<ol>
+  <li>The code in the loop makes an LED built into your ItsyBitsy blink. Can you make out how the blinking behavior is created?</li>
+  <li>Experiment with the blinking frequency of the LED. Change the values defined in <code class="language-plaintext highlighter-rouge">time.sleep(1.0)</code>, then press the <code class="language-plaintext highlighter-rouge">Save</code> button in Mu Editor’s toolbar to store the changes to your code and see their effect.</li>
+  <li>Click the <code class="language-plaintext highlighter-rouge">Serial</code> button in Mu’s toolbar to open the <code class="language-plaintext highlighter-rouge">Serial Monitor</code>. This vital tool lets you see messages printed by your program. Can you figure out how to change the content of the messages appearing in the serial monitor? Remember to save your changes to see their effect.</li>
+</ol>
+
+<p><a href="../adding-inputs-and-outputs/" class="btn btn-blue">Next Tutorial</a></p>

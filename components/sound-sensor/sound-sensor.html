@@ -1,0 +1,93 @@
+<p><img src="assets/Grove-Sound-Sensor.png" alt="Sound Sensor" width="250" /></p>
+
+<h1 id="sound-sensor">Sound Sensor</h1>
+<p><a href="../../glossary/glossary"><img src="../../glossary/assets/input.png" alt="Input" width="72" /></a> <a href="../../glossary/glossary"><img src="../../glossary/assets/analog.png" alt="Analog" width="72" /></a></p>
+
+<p>Senses the intensity of sounds in the environment and converts it into an analog signal.</p>
+
+<p>More detailed information is available on the <a href="https://wiki.seeedstudio.com/Grove-Sound_Sensor/">Seeed Studio Wiki</a>.</p>
+
+<hr />
+
+<h2 id="basic-sound-sensor-usage-example">Basic Sound Sensor Usage Example</h2>
+
+<p>The code example below reads the analog input from a sound sensor connected to pin <strong>A2</strong>. It then prints the sensor value to the serial monitor and introduces a short delay to prevent the program from running too quickly and overwhelming the serial monitor with data.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">analogio</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">sound_sensor</span> <span class="o">=</span> <span class="n">analogio</span><span class="p">.</span><span class="n">AnalogIn</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">A2</span><span class="p">)</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span>
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">sound_sensor</span><span class="p">.</span><span class="n">value</span>
+    <span class="k">print</span><span class="p">((</span><span class="n">val</span><span class="p">,))</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The line <code class="language-plaintext highlighter-rouge">sound_sensor = analogio.AnalogIn(board.A2)</code> creates a new <code class="language-plaintext highlighter-rouge">AnalogIn</code> <a href="../../glossary/glossary">object</a> named <code class="language-plaintext highlighter-rouge">sound_sensor</code>. <code class="language-plaintext highlighter-rouge">AnalogIn</code> provides a <a href="../../glossary/glossary">method</a> called <code class="language-plaintext highlighter-rouge">value</code>, which retrieves the current sensor value. At the beginning of the main loop, <code class="language-plaintext highlighter-rouge">val = sound_sensor.value</code> is used to retrieve and store the value in a <a href="../../glossary/glossary">variable</a> called <code class="language-plaintext highlighter-rouge">val</code>. Finally, we print the value to the Serial Monitor using <code class="language-plaintext highlighter-rouge">print()</code>.</p>
+
+<p class="note">The code examples on this page make use Mu Editor’s Serial Plotter to visually display the sensor readings over time. The plotter can be enabled from the menu bar at the top of Mu Editor. It expects data to be printed as a tuple, so the value is formatted as <code class="language-plaintext highlighter-rouge">(val,)</code> instead of <code class="language-plaintext highlighter-rouge">val</code>.</p>
+
+<h2 id="smoothing-sound-sensor-values">Smoothing Sound Sensor Values</h2>
+
+<p>The code in this example has been slightly altered. Instead of printing the sensor value directly, it collects 32 samples and calculates their average before printing them to achieve a smoother output.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">analogio</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">sound_sensor</span> <span class="o">=</span> <span class="n">analogio</span><span class="p">.</span><span class="n">AnalogIn</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">A2</span><span class="p">)</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span>
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+  	
+    <span class="c1"># Sample 32 sensor readings and calculate their average
+</span>    <span class="n">value_sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
+        <span class="n">value_sum</span> <span class="o">=</span>  <span class="n">value_sum</span> <span class="o">+</span> <span class="n">sound_sensor</span><span class="p">.</span><span class="n">value</span>
+    <span class="n">smoothed_val</span> <span class="o">=</span> <span class="n">value_sum</span> <span class="o">/</span> <span class="mi">32</span>
+    
+    <span class="k">print</span><span class="p">((</span><span class="n">smoothed_val</span><span class="p">,))</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>  					
+</code></pre></div></div>
+
+<p>A better way to write this code encapsulates the smoothing code in a <a href="../../glossary/glossary">function</a>. Doing so improves the readability of the main loop and allows the code in the function to be reused elsewhere in the program:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">analogio</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">sound_sensor</span> <span class="o">=</span> <span class="n">analogio</span><span class="p">.</span><span class="n">AnalogIn</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">A2</span><span class="p">)</span>
+
+<span class="c1"># --- Functions
+</span><span class="k">def</span> <span class="nf">smooth</span><span class="p">(</span><span class="n">sensor</span><span class="p">,</span> <span class="n">samples</span><span class="p">):</span>
+    <span class="n">value_sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span><span class="p">):</span>
+        <span class="n">value_sum</span>  <span class="o">=</span> <span class="n">value_sum</span> <span class="o">+</span> <span class="n">sensor</span><span class="p">.</span><span class="n">value</span>
+    <span class="k">return</span> <span class="n">value_sum</span> <span class="o">/</span> <span class="n">samples</span>
+    
+<span class="c1"># --- Setup
+</span>
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">smoothed_val</span> <span class="o">=</span> <span class="n">smooth</span><span class="p">(</span><span class="n">sound_sensor</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">((</span><span class="n">smoothed_val</span><span class="p">,))</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span> 
+</code></pre></div></div>
+

@@ -1,0 +1,40 @@
+<p><img src="assets/Grove-LED-pack.png" alt="LED Pack" width="250" /></p>
+
+<h1 id="led-pack">LED Pack</h1>
+<p><a href="../../glossary/glossary"><img src="../../glossary/assets/output.png" alt="Output" width="72" /></a> <a href="../../glossary/glossary"><img src="../../glossary/assets/pwm.png" alt="PWM" width="72" /></a></p>
+
+<p>A monochrome light source that is simple to use.</p>
+
+<p class="highlight-yellow">Should your Connected Interaction Kit not include this component, you can use these examples with the LED built into your microcontroller, connected internally to pin <strong><code class="language-plaintext highlighter-rouge">D13</code></strong>.</p>
+
+<p>More information on this component is available <a href="https://www.seeedstudio.com/Grove-LED-Pack-p-4364.html">here</a>.</p>
+
+<hr />
+
+<h2 id="blink">Blink!</h2>
+
+<p>Blinking an LED is often the first programming exercise learners encounter when working with microcontrollers. The example code below performs all steps necessary to configure and then keep cycling an LED on and off once per second. The code works with the inbuilt LED on Pin <strong><code class="language-plaintext highlighter-rouge">D13</code></strong>, but you can also specify any other Digital pin in the code to use with your own LED connected to it.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">digitalio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">led</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">DigitalInOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D13</span><span class="p">)</span>
+<span class="n">led</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">Direction</span><span class="p">.</span><span class="n">OUTPUT</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span>
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">led</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">led</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p class="important">This tutorial only works for simple, single-color LEDs like the LED Pack or your microcontroller’s internal LED. If you want to use a <a href="../chainable-led/chainable-led">Chainable LED</a>, follow the tutorial on the linked page instead.</p>

@@ -1,0 +1,109 @@
+<h1 id="getting-help">Getting help</h1>
+
+<h2 id="why-is-my-code-not-working">Why is my code not working?</h2>
+
+<p class="note">Should you run into issues during coding please first carefully read the troubleshooting page.</p>
+
+<p><a href="troubleshooting" class="btn btn-blue">Troubleshooting page</a></p>
+
+<h2 id="what-can-i-connect-where">What can I connect where?</h2>
+<p>To give you a clear overview we made the following pinout page:<br />
+<a href="pinout">Pinout page</a></p>
+
+<h2 id="what-do-i-do-when-hardware-components-are-not-working">What do I do when hardware components are not working?</h2>
+<p>In case any of your components not working as expected, please check the <a href="../components/index">documentation page</a> of the component first and try getting it running with the example code first.</p>
+
+<p>Most issues can be fixed by double-checking the following:</p>
+<ol>
+  <li>Is your component connected to the right port of the Expander board?</li>
+  <li>Is your ItsyBitsy properly plugged into your computer?</li>
+  <li>Does an error message appear in MU’s <code class="language-plaintext highlighter-rouge">Serial monitor</code>, indicating a software issue (e.g. typos, coding mistake, missing library, etc.)</li>
+</ol>
+
+<p>If you checked the points above thoroughly and your component is still not working, you can find extra help at IO’s <a href="https://www.tudelft.nl/io/over-io/faciliteiten/pmb">Model Making and Machine Lab (PMB)</a>.</p>
+
+<h2 id="where-can-i-get-more-hardware-components">Where can I get more hardware components?</h2>
+<p>The Connected Interaction Kit can be extended with additional Grove components. Every Grove component should work.</p>
+
+<p>You can get additional components at following places:</p>
+<ol>
+  <li>Left-over and used Grove components can be gathered from the <a href="https://www.tudelft.nl/io/over-io/faciliteiten/pmb">PMB</a> for free</li>
+  <li>New Grove components can be bought at the <a href="https://www.tudelft.nl/io/over-io/faciliteiten/pmb">PMB</a> for 1€ per piece</li>
+  <li>Depending on the course, components can be borrowed temporarily from IO’s StudioLab and Applied Lab</li>
+  <li>Bought online, for instance at <a href="https://www.kiwi-electronics.nl/en/home">Kiwi Electronics</a></li>
+</ol>
+
+<h2 id="where-can-i-get-support-for-prototyping-for-courses">Where can I get support for prototyping for courses?</h2>
+<p>Each course using the Connected Interaction Kit will have their own tech support that can guide and support you in learning prototyping.</p>
+
+<h2 id="how-do-i-upgrade-my-circuit-python-version">How do I upgrade my Circuit Python version?</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">For Itsy Bitsy M4</th>
+      <th style="text-align: center">For RP2040 Expander</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img src="../components/itsybitsy-microcontroller/assets/recognize_IB_M4.jpg" alt="" width="400" /></td>
+      <td style="text-align: center"><img src="../components/itsybitsy-microcontroller/assets/recognize_IB_RP2040.jpg" alt="BitsyExpander" width="400" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><a href="upgradeCP_M4" class="btn btn-blue">Start upgrade</a></td>
+      <td style="text-align: center"><a href="upgradeCP_RP2040" class="btn btn-blue">Start upgrade</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="how-do-i-install-the-required-circuit-python-libraries">How do I install the required Circuit Python libraries?</h2>
+<ol>
+  <li>Open the latest version of our project bundle</li>
+</ol>
+
+<p><a href="https://github.com/id-studiolab/CIK-Project-Bundle/releases/latest" class="btn btn-blue">Download Project Bundle</a></p>
+
+<ol>
+  <li>Download the cik-project-bundle-9.x-mpy.zip file</li>
+  <li>Unzip the file on your computer</li>
+  <li>Copy the complete lib folder</li>
+  <li>Paste the complete lib folder in the CIRCUITPY drive</li>
+  <li>Press replace if prompted.</li>
+</ol>
+
+<h2 id="how-do-i-install-other-circuit-python-libraries">How do I install other Circuit Python libraries?</h2>
+<p><em>Guide based on <a href="https://learn.adafruit.com/adafruit-itsybitsy-rp2040/circuitpython-libraries">Adafruit update page</a>, check this page for more in-depth guidance</em></p>
+
+<ol>
+  <li>
+    <p>Download the CircuitPython Library you want. You can find the complete Adafruit CircuitPython bundle or the community bundle from this <a href="https://circuitpython.org/libraries">page</a>.<br />
+<img src="assets/libraries.png" alt="" width="100%" /></p>
+  </li>
+  <li>
+    <p>Unzip the file and copy the desired file(s) to the <code class="language-plaintext highlighter-rouge">lib</code> folder on your ItsyBitsy</p>
+  </li>
+</ol>
+
+<p>Alternatively you can read more about libraries on the following page: <a href="libraries">libraries</a></p>
+
+<h1 id="how-to-upgrade-the-itsybitsy-m4-bootloader">How to upgrade the ItsyBitsy M4 bootloader</h1>
+<p>This is only for the Itsy Bitsy M4. <em>Guide based on <a href="https://learn.adafruit.com/introducing-adafruit-itsybitsy-m4/update-the-uf2-bootloader">Adafruit update page</a>, check this page for more in-depth guidance</em></p>
+
+<p class="note">This is a guide to update the bootloader, not a guide to update the Circuit Python version</p>
+
+<ol>
+  <li>Connect ItsyBitsy to your computer, you should see a USB drive appear as: CIRCUITPY
+<img src="assets/circuitpy.png" alt="" width="100" /></li>
+  <li>Double-click the RESET button, the drive disappears and reappears as: ITSYM4BOOT
+<img src="../components/itsybitsy-microcontroller/assets/recognize_IB_M4.jpg" alt="" width="200" />
+<img src="assets/ITSYM4BOOT.png" alt="" width="100" /></li>
+  <li>Open the <code class="language-plaintext highlighter-rouge">INFO_UF2.TXT</code>, you should see something like <code class="language-plaintext highlighter-rouge">UF2 Bootloader v2.0.0</code>, this shows you the current version of the bootloader you are using.<br />
+<img src="assets/info_uf2_before_upgrade.png" alt="" width="100%" /></li>
+  <li>Download the latest version <strong>AT THE END</strong> of <a href="https://circuitpython.org/board/itsybitsy_m4_express/#:~:text=Update%20UF2%20Bootloader">this page</a> under “Update UF2 Bootloader”<br />
+<img src="assets/M4_update_bootloader.png" alt="" width="100%" /></li>
+  <li>Drag the .uf2 file to the ITSYM4BOOT drive.<br />
+<img src="assets/dragbootloader_M4.png" alt="" width="100%" /></li>
+  <li>Open the <code class="language-plaintext highlighter-rouge">INFO_UF2.TXT</code>, you should see something like <code class="language-plaintext highlighter-rouge">UF2 Bootloader v3.15.0</code>, this shows you the current version of the bootloader you are upgraded to. <br />
+<img src="assets/info_uf2_after_upgrade.png" alt="" width="100%" /></li>
+</ol>

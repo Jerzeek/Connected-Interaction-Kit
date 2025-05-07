@@ -1,0 +1,48 @@
+<p><img src="assets/custom-temperature-sensor-centered.png" alt="Custom Temperature Sensor" width="250" /></p>
+
+<h1 id="thermistor">Thermistor</h1>
+<p><a href="../../glossary/glossary"><img src="../../glossary/assets/input.png" alt="Input" width="72" /></a> <a href="../../glossary/glossary"><img src="../../glossary/assets/analog.png" alt="Analog" width="72" /></a></p>
+
+<p>Changes its electrical resistance with temperature. Can be used to estimate the current temperature and detect changes.</p>
+
+<p>Learn how to make your own thermistor <a href="../../tutorials/assembling-custom-components/thermistor">here</a>.</p>
+
+<hr />
+
+<h2 id="basic-rotation-potentiometer-example">Basic rotation potentiometer example</h2>
+<p>Download the necessary <code class="language-plaintext highlighter-rouge">adafruit_thermistor</code> library with the <a href="https://circuitpython.org/libraries">7.x bundle</a></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+# --- Imports
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+
+<span class="c1"># Download the library with the 8.x bundle at https://circuitpython.org/libraries
+</span><span class="kn">import</span> <span class="nn">adafruit_thermistor</span> 
+
+<span class="c1"># --- Variables
+# Initialize analog input connected to temperature sensor
+</span><span class="n">resistor</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">resistance</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">nominal_temp</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">b_coefficient</span> <span class="o">=</span> <span class="mi">3950</span>
+
+<span class="c1"># Connect the temperature sensor to pin A2 
+</span><span class="n">temp_sensor</span> <span class="o">=</span> <span class="n">board</span><span class="p">.</span><span class="n">A2</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># Library function to read the temperature sensor accurately
+</span><span class="n">thermistor</span> <span class="o">=</span> <span class="n">adafruit_thermistor</span><span class="p">.</span><span class="n">Thermistor</span><span class="p">(</span>
+    <span class="n">temp_sensor</span><span class="p">,</span> <span class="n">resistor</span><span class="p">,</span> <span class="n">resistance</span><span class="p">,</span> <span class="n">nominal_temp</span><span class="p">,</span> <span class="n">b_coefficient</span>
+<span class="p">)</span>
+
+<span class="c1"># --- Setup
+</span>
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">celsius</span> <span class="o">=</span> <span class="n">thermistor</span><span class="p">.</span><span class="n">temperature</span>
+    <span class="n">fahrenheit</span> <span class="o">=</span> <span class="p">(</span><span class="n">celsius</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">/</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">32</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"== Temperature ==</span><span class="se">\n</span><span class="s">{} *C</span><span class="se">\n</span><span class="s">{} *F</span><span class="se">\n</span><span class="s">"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">celsius</span><span class="p">,</span> <span class="n">fahrenheit</span><span class="p">))</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div></div>
+

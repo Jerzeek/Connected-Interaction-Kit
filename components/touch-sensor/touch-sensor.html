@@ -1,0 +1,80 @@
+<p><img src="assets/Grove-Touch-Sensor.png" alt="Touch Sensor" width="250" /></p>
+
+<h1 id="touch-sensor">Touch Sensor</h1>
+<p><a href="../../glossary/glossary"><img src="../../glossary/assets/input.png" alt="Input" width="72" /></a> <a href="../../glossary/glossary"><img src="../../glossary/assets/digital.png" alt="Digital" width="72" /></a></p>
+
+<p>A capacitive switch that remains active while touched.</p>
+
+<p>More information on this component is available <a href="https://wiki.seeedstudio.com/Grove-Touch_Sensor/">here</a>.</p>
+
+<hr />
+
+<h2 id="basic-usage">Basic Usage</h2>
+
+<p>The code example below reads the state of a touch sensor connected to pin <strong><code class="language-plaintext highlighter-rouge">D7</code></strong> on each run through the main loop. While the sensor remains touched, it turns on the built-in LED of your microcontroller, which is internally connected to pin <strong><code class="language-plaintext highlighter-rouge">D13</code></strong>. When released, the LED is turned off again.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># --- Imports
+</span><span class="kn">import</span> <span class="nn">digitalio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">touch_sensor</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">DigitalInOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D7</span><span class="p">)</span>
+<span class="n">touch_sensor</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">Direction</span><span class="p">.</span><span class="n">INPUT</span>
+
+<span class="n">led</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">DigitalInOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D13</span><span class="p">)</span>
+<span class="n">led</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">Direction</span><span class="p">.</span><span class="n">OUTPUT</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span><span class="n">led_state</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">touch_sensor</span><span class="p">.</span><span class="n">value</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+        <span class="n">led</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">led</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<h2 id="toggling-between-states">Toggling Between States</h2>
+
+<p>In the previous example, the LED’s state directly depends on the state of the touch sensor. While the sensor is touched, the LED is on. Once it is released, the LED turns off. In this code example, we modify the behavior to toggle between the on and off states of the LED each time the sensor is touched.</p>
+
+<p>To achieve this, we use a variable called <code class="language-plaintext highlighter-rouge">last_state</code> to track the previous state of the touch sensor. In the main loop, we check if the current state of the sensor is different from its previous state:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">touch_sensor</span><span class="p">.</span><span class="n">value</span> <span class="o">!=</span> <span class="n">last_touch_state</span><span class="p">:</span>
+</code></pre></div></div>
+
+<p>When the state of the sensor changes, we update the <code class="language-plaintext highlighter-rouge">last_state</code> variable. We then check if the state changed from not touched to touched, in which case we toggle the LED’s state. That way, we ensure the LED’s state changes only once per touch-and-release cycle. The code also prints the toggled LED states to the serial monitor. Therefore, we also introduce a short delay to safeguard against overwhelming the serial monitor with too many messages.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">digitalio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+
+<span class="c1"># --- Variables
+</span><span class="n">touch_sensor</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">DigitalInOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D7</span><span class="p">)</span>
+<span class="n">touch_sensor</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">Direction</span><span class="p">.</span><span class="n">INPUT</span>
+
+<span class="n">led</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">DigitalInOut</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">D13</span><span class="p">)</span>
+<span class="n">led</span><span class="p">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">digitalio</span><span class="p">.</span><span class="n">Direction</span><span class="p">.</span><span class="n">OUTPUT</span>
+
+<span class="c1"># --- Functions
+</span>
+<span class="c1"># --- Setup
+</span><span class="n">last_touch_state</span> <span class="o">=</span> <span class="n">touch_sensor</span><span class="p">.</span><span class="n">value</span>
+<span class="n">led_state</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="c1"># --- Main loop
+</span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">touch_sensor</span><span class="p">.</span><span class="n">value</span> <span class="o">!=</span> <span class="n">last_touch_state</span><span class="p">:</span>
+        <span class="n">last_touch_state</span> <span class="o">=</span> <span class="n">touch_sensor</span><span class="p">.</span><span class="n">value</span>
+        <span class="k">if</span> <span class="n">touch_sensor</span><span class="p">.</span><span class="n">value</span><span class="p">:</span>
+            <span class="n">led_state</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">led_state</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Enable LED"</span> <span class="k">if</span> <span class="n">led_state</span> <span class="k">else</span> <span class="s">"Disable LED"</span><span class="p">)</span>
+            <span class="n">led</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">led_state</span>
+    
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.02</span><span class="p">)</span>
+</code></pre></div></div>
+

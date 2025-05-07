@@ -1,0 +1,364 @@
+<h1 id="soldering-tools-and-technique">Soldering: Tools and Technique</h1>
+
+<p><em>For a more complete introduction into soldering, we recommend reading Sparkfun’s excellent guide <a href="https://learn.sparkfun.com/tutorials/how-to-solder-through-hole-soldering/">HERE</a>.</em></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>This guide intends to be a short read covering the basics of soldering using the tools available in the PMB.</p>
+
+<p>Using personal protective equipment (PPE) while working with hot solder is advisable. We strongly recommend using protective goggles and a fume exhaust.</p>
+
+<p>If you are already familiar with the tools we will work with, you may skip ahead to the following sections:</p>
+
+<ul>
+  <li><a href="#how-to-solder-through-hole-components">How to Solder Through-Hole Components</a></li>
+  <li><a href="#how-to-find-and-fix-bad-connections">How to Find and Fix Bad Connections</a></li>
+</ul>
+
+<p>First, let us take a look at the tools we will need:</p>
+
+<h3 id="essential-tools">Essential Tools</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Soldering Iron</th>
+      <th>Brass Sponge</th>
+      <th>Stand</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="assets/tutorial4/tools/iron.jpg" alt="Soldering Iron" /></td>
+      <td><img src="assets/tutorial4/tools/sponge.jpg" alt="Brass Sponge" /></td>
+      <td><img src="assets/tutorial4/tools/stand.jpg" alt="Stand" /></td>
+    </tr>
+    <tr>
+      <td>The most important tool you will be working with.</td>
+      <td>To keep the iron clean and in working order.</td>
+      <td>For safely storing the iron while hot.</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Solder (with flux core)</th>
+      <th>Flush Cutters</th>
+      <th>Vise or Third Hand</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="assets/tutorial4/tools/solder.jpg" alt="Solder" /></td>
+      <td><img src="assets/tutorial4/tools/cutters.jpg" alt="Flush Cutters" /></td>
+      <td><img src="assets/tutorial4/tools/vise.jpg" alt="Vise" /></td>
+    </tr>
+    <tr>
+      <td>To join components together electrically and mechanically.</td>
+      <td>For trimming excess leads and cutting components to size.</td>
+      <td>To hold your workpiece while you work on it.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="nice-to-haves">Nice-to-Haves</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Flux Pen</th>
+      <th>Solder Wick</th>
+      <th>Sticky Putty</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="assets/tutorial4/tools/flux.jpg" alt="Flux Pen" width="300px" /></td>
+      <td><img src="assets/tutorial4/tools/wick.jpg" alt="Solder Wick" width="300px" /></td>
+      <td><img src="assets/tutorial4/tools/tack.jpg" alt="Solder Wick" width="300px" /></td>
+    </tr>
+    <tr>
+      <td>Used to make solder flow better. Needed for repairs and solder whithout flux core.</td>
+      <td>Used to “soak up” excess solder. Important for repairing or reworking a solder joint.</td>
+      <td>Can help holding components, wires, or wick in place during the soldering process.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="how-to-solder-through-hole-components">How to Solder Through-Hole Components</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Before you begin</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Make sure the power to your work station is turned on. Ensure the circuit breaker <strong>(1)</strong> is in the “ON” position (up), then turn on the switch <strong>(2)</strong>. If the power remains off, the Emergency Stop button may be tripped, ask for assistance.</td>
+      <td><img src="assets/tutorial4/pth-instructions/power.jpg" alt="Power On" style="min-width: 240px; max-width: 240px" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"><strong>Step 1: Pre-heat the iron</strong></th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Turn on the exhaust and the soldering iron. Set the iron to <strong>370°C</strong> and let it heat up for a few seconds. (370°C works best for the lead-free solder, for leaded solder use 340°C)</td>
+      <td><img src="assets/tutorial4/pth-instructions/settings.jpg" alt="Settings" style="min-width: 240px; max-width: 240px" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Step 2: Clean and tin the tip</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Make sure the tip of your soldering iron is shiny. If it is blackened and matte, dirt and oxidation will prevent the heat from transfering into the joint. In this case, wipe the tip of the iron in the brass sponge to clean it. Then tin it by applying a bit of solder to the tip. <br /><br /><strong><em>The tip should look shiny before you proceed.</em></strong></td>
+      <td><img class="multi-graphic-justify" src="assets/tutorial4/pth-instructions/oxidation.jpg" alt="Oxidation" style="min-width: 240px; max-width: 240px" /><img class="multi-graphic-justify" src="assets/tutorial4/pth-instructions/tinning.jpg" alt="Tinned Tip" style="min-width: 240px; max-width: 240px" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Step 3: Seat a component</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Insert one or more components and fix them. Components with flexible leads (e.g. resistors) can be easily fixed by bending the legs on the back of the PCB. Other components are easier to fix with a vise or some sticky putty. <strong>Avoid short-circuits</strong> by checking that components are not touching any other conductive parts of the board (<a href="#inspect-your-component-leads">as shown here</a>). <br /><br /><strong><em>Secure the hot soldering iron in the stand while you do this.</em></strong></td>
+      <td><img class="multi-graphic-justify" src="assets/tutorial4/pth-instructions/populating.jpg" alt="Populating" style="min-width: 240px; max-width: 240px" /><img class="multi-graphic-justify" src="assets/tutorial4/pth-instructions/fixing.jpg" alt="Fixing" style="min-width: 240px; max-width: 240px" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Step 4: Make a joint</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Apply heat to the joint you want to solder for a few seconds. Make sure you heat the pad and the lead at the same time. Then feed some solder wire into the joint until it is <strong>fully covered</strong> in solder and forms a tent shape. (If the through-hole is much wider than the component lead, it is OK if the joint is flat.) <br /><br /><strong><em>Make sure to feed solder directly into the pre-heated joint! DON’T apply solder to the tip of your iron and try to “wipe” it into the joint!</em></strong></td>
+      <td><img class="multi-graphic-justify" src="assets/tutorial4/pth-instructions/joining.png" alt="Joining" style="min-width: 240px; max-width: 240px" /><img class="multi-graphic-justify" src="assets/tutorial4/pth-instructions/tented-notrim.png" alt="Tented" style="min-width: 240px; max-width: 240px" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Step 5: Trim excess leads</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Use the flush cuttes to cut excess leads as close as possible to the board.</td>
+      <td><img class="multi-graphic-justify" src="assets/tutorial4/pth-instructions/trimming.jpg" alt="Trimming" style="min-width: 240px; max-width: 240px" /><img class="multi-graphic-justify" src="assets/tutorial4/pth-instructions/trim-illustration.png" alt="Trimming Illustration" style="min-width: 240px; max-width: 240px" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Step 6: Inspect</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Check that all the joints look good and no solder bridges/short circuits exist. Check the <a href="#how-to-find-and-fix-bad-connections">following paragraph</a> for guidance on finding and resolving issues.</td>
+      <td><img src="assets/tutorial4/pth-instructions/inspecting.jpg" alt="Inspecting" style="min-width: 240px; max-width: 240px" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Step 7: Wrap-up</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Tin the tip of the iron (see step 2) so the next person finds it in working order. <br /><br /><strong><em>Don’t forget to turn off your iron. If no one else is working at the station when you leave, turn off the main power.</em></strong></td>
+      <td><img src="assets/tutorial4/pth-instructions/poweroff.jpg" alt="Power Off" style="min-width: 240px; max-width: 240px" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="how-to-find-and-fix-bad-connections">How to Find and Fix Bad Connections</h2>
+
+<h3 id="inspect-your-component-leads">Inspect your Component Leads</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Avoid Shorts</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Make sure the leads of your mounted components don’t kink or touch pads on the circuit board they are not supposed to. This can otherwise lead to unexpected behavior or render the component completely non-functional.</td>
+      <td><img class="multi-graphic-justify" src="assets/tutorial4/inspect/component-ok.png" alt="Component No Short" style="min-width: 240px; max-width: 240px" /><img class="multi-graphic-justify" src="assets/tutorial4/inspect/component-short.png" alt="Component Short" style="min-width: 240px; max-width: 240px" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="inspect-your-solder-joints">Inspect your Solder Joints</h3>
+
+<h3 id="good-joints"><em>Good Joints</em></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Concave Tent Shape</th>
+      <th>Convex Tent Shape</th>
+      <th>Separation between Joints</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="assets/tutorial4/inspect/tented.png" alt="Tent" /></td>
+      <td><img src="assets/tutorial4/inspect/tented-convex.png" alt="Convex Tent" /></td>
+      <td><img src="assets/tutorial4/inspect/no-short.png" alt="No Short" /></td>
+    </tr>
+    <tr>
+      <td>Convex tent shape - the solder covers the entire pad. The ideal outcome.</td>
+      <td>This might look like too much solder, however it is a good joint.</td>
+      <td>There is a clear separation between joints, they do not touch one another.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em><strong>Note:</strong> If the mounting hole is much bigger than the component lead, there will not be a distinct tent shape. In that case, it is fine if the joint is flush or lentil-shaped as long as it evenly covers the entire pad.</em></p>
+
+<h3 id="bad-joints"><em>Bad Joints</em></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Cold Joint (Pad)</th>
+      <th style="text-align: left">Cold Joint (Pin)</th>
+      <th style="text-align: left">Insufficient Wetting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><img src="assets/tutorial4/inspect/blob.png" alt="Blob" /></td>
+      <td style="text-align: left"><img src="assets/tutorial4/inspect/cold-joint.png" alt="Not Fully Molten" /></td>
+      <td style="text-align: left"><img src="assets/tutorial4/inspect/semimolten.png" alt="Not Fully Molten" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Problem:</strong> Joint is unevenly heated, so the solder only flows onto the hot parts (In this case, the pad was too cold). Can also be caused by insufficient flux.</td>
+      <td style="text-align: left"><strong>Problem:</strong> Components moved while solder was solidifying. Can introduce cracks between component and pad. Can also happen to good joints over time (if they are under repeated mechanical stress).</td>
+      <td style="text-align: left"><strong>Problem:</strong> Not enough heat, so the solder does not fully liquefy. It does not flow nicely and refuses to “cling” to the components (it does not want to wet the components).</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Solution:</strong> Add flux, retouch joint with hot iron (apply heat for at least for 2-3 seconds).</td>
+      <td style="text-align: left"><strong>Solution:</strong> Add flux, retouch joint with hot iron (apply heat for at least for 2-3 seconds).</td>
+      <td style="text-align: left"><strong>Solution:</strong> Add flux, reheat the joint, add solder.</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Too Much Solder</th>
+      <th style="text-align: left">Too Little Solder</th>
+      <th style="text-align: left">Solder Jumper (Short-Circuit)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><img src="assets/tutorial4/inspect/too-much.png" alt="Excess Solder" /></td>
+      <td style="text-align: left"><img src="assets/tutorial4/inspect/too-little.png" alt="Insufficient Solder" /></td>
+      <td style="text-align: left"><img src="assets/tutorial4/inspect/short.png" alt="Solder Jumper" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Problem:</strong> Too much solder is applied. It forms a ball, or even flows over its pad.</td>
+      <td style="text-align: left"><strong>Problem:</strong> Not enough solder is applied. It does not fill the through hole and isn’t able to flow onto the entire pad/component leg.</td>
+      <td style="text-align: left"><strong>Problem:</strong> Too much solder on neighboring joints merges them to cause a short-circuit. Can also be due to insufficient heat and flux, preventing surface tension from “pulling” the solder onto the pads.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Solution:</strong> Add a bit of flux, then use wick to remove excess solder. <a href="#how-to-use-solder-wick-to-rework-a-joint">See below</a> on how to use solder wick.</td>
+      <td style="text-align: left"><strong>Solution:</strong> Reheat the joint, add solder.</td>
+      <td style="text-align: left"><strong>Solution:</strong> Add a bit of flux, apply heat, then drag the iron across shorted joints. If the problem persists, use wick to remove excess solder. <a href="#how-to-use-solder-wick-to-rework-a-joint">See below</a> on how to use solder wick.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="how-to-use-solder-wick-to-rework-a-joint">How To Use Solder Wick to Rework a Joint</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Step 1: Position Wick</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Apply some flux to the joint you wish to rework. Then position the wick.</td>
+      <td><img src="assets/tutorial4/pth-instructions/wick-position.jpg" alt="Position Solder Wick" style="min-width: 240px; max-width: 240px" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"><strong>Step 2: Apply Heat</strong></th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Apply heat to the joint through the wick. Make sure to fix the wick without touching it, e.g. using sticky putty. <br /><br /><strong><em>Wick conducts heat very fast and can burn your fingers! Make sure not to touch it while heating it!</em></strong></td>
+      <td><img src="assets/tutorial4/pth-instructions/wick-heat.jpg" alt="Apply Heat" style="min-width: 240px; max-width: 240px" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Step 3: Soak Up Excess Solder</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Keep applying heat while the wick soaks up the melting solder. Remove the wick while still hot. <strong>Don’t rip it off with force!</strong> If it sticks, re-apply some heat for the solder to melt. Removing the wick should not require applying force.<br /><br />Add solder back into the joint if needed.</td>
+      <td><img src="assets/tutorial4/pth-instructions/wick-soak.jpg" style="min-width: 240px; max-width: 240px" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/699454884?h=5ed2a5682e&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen="" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="How to Repair a Solder Joint"></iframe></div>
+<script src="https://player.vimeo.com/api/player.js"></script>
+
